@@ -26,7 +26,7 @@ var toastList = toastElList.map(function (toastEl) {
 //LO QUE YO PROGRAME
 //FUNCION PARA OBTENER DATOS
 function fetchData(){
-   fetch('https://apipetshop.herokuapp.com/api/articulos')
+   fetch('../js/data.json') //https://apipetshop.herokuapp.com/api/articulos
    .then(response => response.json())
    .then(data => funcionPrincipal(data.response) )
 }
@@ -44,7 +44,7 @@ function funcionPrincipal(dataRaw){
 
    if(document.getElementById('farmacia')){
 
-      cargaProductos(dataRaw, document.getElementById('farmacia'), 'Medicamento') 
+      cargaProductos(dataRaw, document.getElementById('farmacia'), 'Medicamento')
 
    }else if(document.getElementById('juguetes')){
 
@@ -57,53 +57,57 @@ function funcionPrincipal(dataRaw){
          }
       })
    }else if(document.getElementById('carrito')){
+
       arrArtCarrito = JSON.parse(localStorage.getItem('idComp'))
-      
-      var arrCarrito = dataRaw.filter((art) =>{
-         for(var i = 0; i < arrArtCarrito.length; i++){
-            if(art._id == arrArtCarrito[i].idComp){
-               return art
+
+      if(arrArtCarrito){
+         var arrCarrito = dataRaw.filter((art) =>{
+            for(var i = 0; i < arrArtCarrito.length; i++){
+               if(art._id == arrArtCarrito[i].idComp){
+                  return art
+               }
             }
-         }
-      })
-      //CREA LOS ELEMENTOS DEL CARRITO
-      arrCarrito.map((art) => {
-
-         var row = document.createElement('tr')
-         row.classList.add('align-center')
-         row.innerHTML = `
-         <td class="text-center align-middle"><img class="img-fluid img-thumbnail" src="${art.imagen}" alt="Imagen de articulo"></td>
-         <td class="text-center align-middle">${art.nombre}</td>
-         <td class="text-center align-middle fw-bold">$ ${art.precio}</td>
-         `
-         var tdEli = document.createElement('td')
-         tdEli.classList.add('text-center', 'align-middle', 'col-1')
-
-         var btnEli = document.createElement('button')
-         btnEli.classList.add('btn', 'btn-danger')
-         btnEli.innerText = 'X'
-         btnEli.addEventListener('click', function(){
-            btnEli.parentElement.parentElement.remove()
          })
+         //CREA LOS ELEMENTOS DEL CARRITO
+         arrCarrito.map((art) => {
+   
+            var row = document.createElement('tr')
+            row.classList.add('align-center')
+            row.innerHTML = `
+            <td class="text-center align-middle"><img class="img-fluid img-thumbnail" src="${art.imagen}" alt="Imagen de articulo"></td>
+            <td class="text-center align-middle">${art.nombre}</td>
+            <td class="text-center align-middle fw-bold">$ ${art.precio}</td>
+            `
+            var tdEli = document.createElement('td')
+            tdEli.classList.add('text-center', 'align-middle', 'col-1')
+   
+            var btnEli = document.createElement('button')
+            btnEli.classList.add('btn', 'btn-danger')
+            btnEli.innerText = 'X'
+            btnEli.addEventListener('click', function(){
+               btnEli.parentElement.parentElement.remove()
+            })
+   
+            tdEli.appendChild(btnEli)
+            row.appendChild(tdEli)
+            document.getElementById('carrito').appendChild(row)
+         })
+   
+         var btnCompra = document.getElementById('compra')
+         var btnCancCompra = document.getElementById('cancCompra')
+   
+         btnCompra.addEventListener('click', function(){
+            localStorage.clear();
+         })
+   
+         btnCancCompra.addEventListener('click', function(){
+            localStorage.clear();
+         })
+   
+         var cantidadProducCarrito = document.getElementById('cantProd')
+         cantidadProducCarrito.innerHTML = `<i class="fas fa-shopping-cart"></i> ${arrArtCarrito.length}`
 
-         tdEli.appendChild(btnEli)
-         row.appendChild(tdEli)
-         document.getElementById('carrito').appendChild(row)
-      })
-
-      var btnCompra = document.getElementById('compra')
-      var btnCancCompra = document.getElementById('cancCompra')
-
-      btnCompra.addEventListener('click', function(){
-         localStorage.clear();
-      })
-
-      btnCancCompra.addEventListener('click', function(){
-         localStorage.clear();
-      })
-
-      var cantidadProducCarrito = document.getElementById('cantProd')
-      cantidadProducCarrito.innerHTML = `<i class="fas fa-shopping-cart"></i> ${arrArtCarrito.length}`
+      }
    
    }
 }
@@ -113,16 +117,16 @@ function cargaProductos(dataRaw, rowFather, tipo){
       if(dataRaw.tipo == tipo){
          return crarArticulo(dataRaw, rowFather)
       }
-   }) 
+   })
 }
 //CREA LAS TARJETAS DE LOS PRODUCTOS
 function crarArticulo(dataRaw, rowFather){
    //DISPONIBILIDAD
-   var stock = '<div class="py-3"></div>'
+   var stock = '<div class="badge"><div class="esp"></div></div>'
    //ESTO ES UN PARCHE, BUSCAR MEJOR RESOLUCION
    var border = '-'
    if(dataRaw.stock <= 5){
-      stock = '<span class="badge py-2 bg-danger rounded-0 text-white">¡¡ULTIMAS UNIDADES!!</span>'
+      stock = '<div class="badge bg-danger rounded-0 text-white">¡¡ULTIMAS UNIDADES!!</div>'
       border = 'border-danger'
    }
    const articulo = document.createElement('div')
@@ -134,9 +138,10 @@ function crarArticulo(dataRaw, rowFather){
    articuloContenedor.innerHTML = `
    <img src="${dataRaw.imagen}" class="card-img-top img-thumbnail" alt="Imagen de producto">
    ${stock}
-   <div class="d-flex flex-column justify-content-between align-items-center card-body">
-      <h3 class="card-title bd-highlight">$ ${dataRaw.precio}</h3>
-      <p class="card-text bd-highlight"> ${dataRaw.nombre}</p> 
+   <div class="card-body">
+      <h3 class="card-title bd-highlight text-center">$ ${dataRaw.precio}</h3>
+      
+      <p class="card-text bd-highlight text-center"> ${dataRaw.nombre}</p> 
    </div>
    `
    const btn = document.createElement('a')
@@ -186,7 +191,18 @@ function impArti(dataRaw, row){
             <div class="col-4">
                <h1>${dataRaw.nombre}</h1>
                <h2>${dataRaw.tipo}</h2>
-               <h2>Stock: ${dataRaw.stock}</h2>
+               <h2>
+                  <div class="dropdown">
+                     <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                     Cantidad de articulos
+                     </button>
+                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                     <li><a class="dropdown-item" href="#">1</a></li>
+                     <li><a class="dropdown-item" href="#">2</a></li>
+                     <li><a class="dropdown-item" href="#">3</a></li>
+                     </ul>
+                  </div>
+               </h2>
                <h2>$ ${dataRaw.precio}</h2>
             </div>
          </div>
@@ -195,6 +211,18 @@ function impArti(dataRaw, row){
          <p>${dataRaw.descripcion}</p>
       </div>
    `
+
+   // <div class="dropdown">
+   //    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+   //       Dropdown button
+   //    </button>
+   //    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+   //       <li><a class="dropdown-item" href="#">Action</a></li>
+   //       <li><a class="dropdown-item" href="#">Another action</a></li>
+   //       <li><a class="dropdown-item" href="#">Something else here</a></li>
+   //    </ul>
+   // </div>
+
 
    //BOTON PARA VOLVER ATRAS
    const divButt = document.createElement('div')
@@ -206,6 +234,7 @@ function impArti(dataRaw, row){
    btnPrev.setAttribute('data-bs-toggle','modal')
    btnPrev.setAttribute('data-bs-target','#exampleModal')
    btnPrev.innerText = 'Volver al sitio anterior'
+
    btnPrev.addEventListener('click', function(){
       history.back()
    })
@@ -241,4 +270,9 @@ function impArti(dataRaw, row){
 //EL BOTON DEL CARRITO QUE SE ACTUALICE A LO ÚLTIMO
 var contarProd = document.getElementById('cantProd')
 var cantProd = JSON.parse(localStorage.getItem('idComp'))
-contarProd.innerHTML = `<i class="fas fa-shopping-cart"></i> ${cantProd.length}`
+if(cantProd){
+   contarProd.innerHTML = `<i class="fas fa-shopping-cart"></i> ${cantProd.length}`
+}else{
+   contarProd.innerHTML = `<i class="fas fa-shopping-cart"></i> 0`
+}
+
