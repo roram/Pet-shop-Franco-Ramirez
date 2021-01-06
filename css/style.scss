@@ -1,0 +1,342 @@
+$enable-rounded: true;
+$enable-shadows: true;
+// $enable-gradients: true;
+$enable-grid-classes: true;
+$enable-print-styles: true;
+
+$white:    #fff !default;
+$gray-100: #f8f9fa !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #6c757d !default;
+$gray-700: #495057 !default;
+$gray-800: #343a40 !default;
+$gray-900: #212529 !default;
+$black:    #000 !default;
+
+$grays: () !default;
+$grays: map-merge(
+  (
+    "100": $gray-100,
+    "200": $gray-200,
+    "300": $gray-300,
+    "400": $gray-400,
+    "500": $gray-500,
+    "600": $gray-600,
+    "700": $gray-700,
+    "800": $gray-800,
+    "900": $gray-900
+  ),
+  $grays
+);
+
+$blue:    #007bff !default;
+$indigo:  #6610f2 !default;
+$purple:  #6f42c1 !default;
+$pink:    #e83e8c !default;
+$red:     #dc3545 !default;
+$orange:  #fd7e14 !default;
+$yellow:  #ffc107 !default;
+$green:   #28a745 !default;
+$teal:    #20c997 !default;
+$cyan:    #17a2b8 !default;
+//**********************
+// MI PALETA DE COLORES (INVESTIGAR !default)
+
+//COLOR AMBER
+//COLORES QUE ACENTUAN 
+$amber-accent-4: #ffab00;
+$amber-accent-3: #ffc400;
+$amber-accent-2: #ffd740;
+$amber-accent-1: #ffe57f;
+//COLORES OSCUROS
+$amber-darken-4: #ff6f00;
+$amber-darken-3: #ff8f00;
+$amber-darken-2: #ffa000;
+$amber-darken-1: #ffb300;
+//COLOR PURO
+$amber:          #ffc107;
+//COLORES CLAROS
+$amber-lighten-1:#ffca28;
+$amber-lighten-2:#ffd54f;
+$amber-lighten-3:#ffe082;
+$amber-lighten-4:#ffecb3;
+$amber-lighten-5:#fff8e1;
+
+//COLOR BLUE
+//COLORES QUE ACENTUAN 
+$blue-accent-4: #2962ff;
+$blue-accent-3: #2979ff;
+$blue-accent-2: #448aff;
+$blue-accent-1: #82b1ff;
+//COLORES OSCUROS
+$blue-darken-4: #0d47a1;
+$blue-darken-3: #1565c0;
+$blue-darken-2: #1976d2;
+$blue-darken-1: #1e88e5;
+//COLOR PURO
+$blue-my:          #2196f3;
+//COLORES CLAROS
+$blue-lighten-1:#42a5f5;
+$blue-lighten-2:#64b5f6;
+$blue-lighten-3:#90caf9;
+$blue-lighten-4:#bbdefb;
+$blue-lighten-5:#e3f2fd;
+
+$colors: () !default;
+$colors: map-merge(
+  (
+      "blue":       $blue,
+      "indigo":     $indigo,
+      "purple":     $purple,
+      "pink":       $pink,
+      "red":        $red,
+      "orange":     $orange,
+      "yellow":     $yellow,
+      "green":      $green,
+      "teal":       $teal,
+      "cyan":       $cyan,
+      "white":      $white,
+      "gray":       $gray-600,
+      "gray-dark":  $gray-800,
+      //FUNCION INTERMEDIA. QUE HACE?
+      //PALETA DE COLORES
+
+      //COLOR AMBER
+      //COLORES QUE ACENTUAN
+      "amber-accent-4": $amber-accent-4,
+      "amber-accent-3": $amber-accent-3,
+      "amber-accent-2": $amber-accent-2,
+      "amber-accent-1": $amber-accent-1,
+      //COLORES OSCUROS
+      "amber-darken-4": $amber-darken-4,
+      "amber-darken-3": $amber-darken-3,
+      "amber-darken-2": $amber-darken-2,
+      "amber-darken-1": $amber-darken-1,
+      //COLOR PURO
+      "amber":      $amber,
+      //COLORES CLAROS
+      "amber-lighten-5": $amber-lighten-5,
+      "amber-lighten-4": $amber-lighten-4,
+      "amber-lighten-3": $amber-lighten-3,
+      "amber-lighten-2": $amber-lighten-2,
+      "amber-lighten-1": $amber-lighten-1,
+
+      //COLOR BLUE
+      //COLORES QUE ACENTUAN
+      "blue-accent-4": $blue-accent-4,
+      "blue-accent-3": $blue-accent-3,
+      "blue-accent-2": $blue-accent-2,
+      "blue-accent-1": $blue-accent-1,
+      //COLORES OSCUROS
+      "blue-darken-4": $blue-darken-4,
+      "blue-darken-3": $blue-darken-3,
+      "blue-darken-2": $blue-darken-2,
+      "blue-darken-1": $blue-darken-1,
+      //COLOR PURO
+      "blue-my":      $blue-my,
+      //COLORES CLAROS
+      "blue-lighten-5": $blue-lighten-5,
+      "blue-lighten-4": $blue-lighten-4,
+      "blue-lighten-3": $blue-lighten-3,
+      "blue-lighten-2": $blue-lighten-2,
+      "blue-lighten-1": $blue-lighten-1
+  ),
+  $colors
+);
+
+//SECCION QUE UNE LAS 2 PARTES
+$primary:       $blue !default;
+$secondary:     $gray-600 !default;
+$success:       $green !default;
+$info:          $cyan !default;
+$warning:       $yellow !default;
+$danger:        $red !default;
+$light:         $gray-100 !default;
+$dark:          $gray-800 !default;
+//MIS COLORES
+
+//PALETA AMBER
+//COLORES QUE ACENTUAN
+$amber-acc-4: $amber-accent-4;
+$amber-acc-3: $amber-accent-3;
+$amber-acc-2: $amber-accent-2;
+$amber-acc-1: $amber-accent-1;
+//COLORES OSCUROS
+$amber-dark-4: $amber-darken-4;
+$amber-dark-3: $amber-darken-3;
+$amber-dark-2: $amber-darken-2;
+$amber-dark-1: $amber-darken-1;
+//COLOR PURO
+$amber-pr:     $amber;
+//COLORES CLAROS
+$amber-lig-5:  $amber-lighten-5;
+$amber-lig-4:  $amber-lighten-4;
+$amber-lig-3:  $amber-lighten-3;
+$amber-lig-2:  $amber-lighten-2;
+$amber-lig-1:  $amber-lighten-1;
+
+//PALETA BLUE
+//COLORES QUE ACENTUAN
+$blue-acc-4: $blue-accent-4;
+$blue-acc-3: $blue-accent-3;
+$blue-acc-2: $blue-accent-2;
+$blue-acc-1: $blue-accent-1;
+//COLORES OSCUROS
+$blue-dark-4: $blue-darken-4;
+$blue-dark-3: $blue-darken-3;
+$blue-dark-2: $blue-darken-2;
+$blue-dark-1: $blue-darken-1;
+//COLOR PURO
+$blue-pr:     $blue-my;
+//COLORES CLAROS
+$blue-lig-5:  $blue-lighten-5;
+$blue-lig-4:  $blue-lighten-4;
+$blue-lig-3:  $blue-lighten-3;
+$blue-lig-2:  $blue-lighten-2;
+$blue-lig-1:  $blue-lighten-1;
+
+$theme-colors: () !default;
+$theme-colors: map-merge(
+  (
+    "primary":    $primary,
+    "secondary":  $secondary,
+    "success":    $success,
+    "info":       $info,
+    "warning":    $warning,
+    "danger":     $danger,
+    "light":      $light,
+    "dark":       $dark,
+    //PALETA DE COLORES AMBER
+
+    //COLORES QUE ACENTUAN
+    "amber-acc-4": $amber-acc-4,
+    "amber-acc-3": $amber-acc-3,
+    "amber-acc-2": $amber-acc-2,
+    "amber-acc-1": $amber-acc-1,
+    //COLORES OSCUROS
+    "amber-dark-4": $amber-dark-4,
+    "amber-dark-3": $amber-dark-3,
+    "amber-dark-2": $amber-dark-2,
+    "amber-dark-1": $amber-dark-1,
+    //COLOR PURO
+    "amber-pr":      $amber-pr,
+    //COLORES CLAROS
+    "amber-lig-5": $amber-lig-5,
+    "amber-lig-4": $amber-lig-4,
+    "amber-lig-3": $amber-lig-3,
+    "amber-lig-2": $amber-lig-2,
+    "amber-lig-1": $amber-lig-1,
+
+    //PALETA DE COLORES BLUE
+
+    //COLORES QUE ACENTUAN
+    "blue-acc-4": $blue-acc-4,
+    "blue-acc-3": $blue-acc-3,
+    "blue-acc-2": $blue-acc-2,
+    "blue-acc-1": $blue-acc-1,
+    //COLORES OSCUROS
+    "blue-dark-4": $blue-dark-4,
+    "blue-dark-3": $blue-dark-3,
+    "blue-dark-2": $blue-dark-2,
+    "blue-dark-1": $blue-dark-1,
+    //COLOR PURO
+    "blue-pr":      $blue-pr,
+    //COLORES CLAROS
+    "blue-lig-5": $blue-lig-5,
+    "blue-lig-4": $blue-lig-4,
+    "blue-lig-3": $blue-lig-3,
+    "blue-lig-2": $blue-lig-2,
+    "blue-lig-1": $blue-lig-1
+  ),
+  $theme-colors
+);
+
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+//ESTILOS GENERALES
+//Footer va a quedar siempre abajo de todo no importa el contenido
+body
+{
+  height:100vh;
+  display:flex; 
+  flex-direction:column;
+}
+footer{
+  margin-top:auto;
+}
+iframe
+{
+   height: 60vh;
+   width: 100%;
+}
+//BARRA DE NAVEGACION
+.neveg ul li a{
+   font-size:1.5vw;
+}
+.logo
+{
+   width: 20vw;
+}
+//DIRECCION
+.direc iframe{
+   width: 100%;
+   height: 40vh;
+}
+
+//***************
+//PÁGINA CONTACTO
+
+//OCULTAR FLECHAS EN INPUT TIPO NÚMERO
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+// DESACTIVAR EL RESIZE
+textarea { 
+  resize: none; 
+}
+
+//************************
+//PAGINA JUGUETES/FARMACIA
+.card{
+  height: 100%;
+}
+
+//IMAGENES PARA COMPRAR PRODUCTOS
+.opacidad{
+  background-color:rgba(0, 0, 0,0.5);
+  height: 50vh;
+}
+.imgJuguete{
+  background-image: url('../assets/images/gato_jugando_grande.jpg');
+  background-position: center center;
+  background-size:cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+}
+.imgFarmacia{
+  background-image: url('../assets/images/farmacia_original.jpg');
+  background-position: 60% center;
+  background-size:cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+}
+.alineaTexto{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
