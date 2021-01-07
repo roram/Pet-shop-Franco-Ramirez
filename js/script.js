@@ -162,109 +162,112 @@ function crarArticulo(dataRaw, rowFather){
 }
 //FUNCION PARA MOSTRAR LOS DATOS EN PAGINA ARTICULO
 function impArti(dataRaw, row){
-   const articuloDet = document.createElement('div')
-   articuloDet.classList.add('row')
+   
+
+
+   // const articuloDetRow = document.createElement('div')
+   // articuloDetRow.classList.add('row', 'mt-5')
+
+   // const articuloDetCol = document.createElement('div')
+   // articuloDetCol.classList.add('col-12')
+
 
    //CREO ELEMENTO PARA ELEGIR LA CANTIDAD DE PRODUCTOS DEPENDIENDO DEL STOCK
-   var cantProd = document.createElement('select')
-   cantProd.classList.add('form-select')
-   cantProd.setAttribute('aria-label', 'Default select')
    
-   var optDef = document.createElement('option')
-   optDef.text = " - "
-   cantProd.appendChild(optDef)
 
-   var optVar = document.createElement('option')
-   var cont = 1
-   for(var i = 0; i < dataRaw.stock; i++){
-      optVar.text = cont
-      cantProd.appendChild(optVar)
-      cont++
-   }
+   // articuloDetCol.innerHTML =
+   //    <div class="col-12 d-flex justify-content-center align-items-center">
+   //       <div class="col-5">
+   //          <img class="img-fluid img-thumbnail" src="${dataRaw.imagen}" alt="Imagen de artículo">
+   //       </div>
+   //       <div class="col-4">
+   //          <h1>${dataRaw.nombre}</h1>
+   //          <h2>${dataRaw.tipo}</h2>
+   //          <h2>$ ${dataRaw.precio}</h2>
+   //          <h2>
+   //             <div class="dropdown">
+   //                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+   //                Cantidad de articulos
+   //                </button>
+   //                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+   //                <li><a class="dropdown-item" href="#">1</a></li>
+   //                <li><a class="dropdown-item" href="#">2</a></li>
+   //                <li><a class="dropdown-item" href="#">3</a></li>
+   //                </ul>
+   //             </div>
+   //          </h2>
+   //          <p>${dataRaw.descripcion}</p>
+   //       </div>
+   //    </div>
    
-   articuloDet.innerHTML =`
-      <div class="col-12">
-         <div class="row justify-content-center py-5">
-            <div class="col-5">
-               <img class="img-fluid img-thumbnail" src="${dataRaw.imagen}" alt="Imagen de artículo">
-            </div>
-            <div class="col-4">
-               <h1>${dataRaw.nombre}</h1>
-               <h2>${dataRaw.tipo}</h2>
-               <h2>
-                  <div class="dropdown">
-                     <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                     Cantidad de articulos
-                     </button>
-                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                     <li><a class="dropdown-item" href="#">1</a></li>
-                     <li><a class="dropdown-item" href="#">2</a></li>
-                     <li><a class="dropdown-item" href="#">3</a></li>
-                     </ul>
-                  </div>
-               </h2>
-               <h2>$ ${dataRaw.precio}</h2>
-            </div>
-         </div>
-      </div>
-      <div class="col-12 py-2">
-         <p>${dataRaw.descripcion}</p>
-      </div>
-   `
-
-   // <div class="dropdown">
-   //    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-   //       Dropdown button
-   //    </button>
-   //    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-   //       <li><a class="dropdown-item" href="#">Action</a></li>
-   //       <li><a class="dropdown-item" href="#">Another action</a></li>
-   //       <li><a class="dropdown-item" href="#">Something else here</a></li>
-   //    </ul>
-   // </div>
-
+// LO QUE TENGO QUE RECREAR
+//    <div class="col-4">
+//          <h1>${dataRaw.nombre}</h1>
+//          <h2>${dataRaw.tipo}</h2>
+//          <h2>$ ${dataRaw.precio}</h2>
+//          <h2>
+//             <div class="dropdown">
+//                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+//                Cantidad de articulos
+//                </button>
+//                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+//                <li><a class="dropdown-item" href="#">1</a></li>
+//                <li><a class="dropdown-item" href="#">2</a></li>
+//                <li><a class="dropdown-item" href="#">3</a></li>
+//                </ul>
+//             </div>
+//          </h2>
+//          <p>${dataRaw.descripcion}</p>
+//       </div>
 
    //BOTON PARA VOLVER ATRAS
-   const divButt = document.createElement('div')
-   divButt.classList.add('col-12','pb-5')
 
-   const btnPrev = document.createElement('a')
-   btnPrev.classList.add('btn','btn-primary' ,'mx-1')
-   btnPrev.setAttribute('type','button')
-   btnPrev.setAttribute('data-bs-toggle','modal')
-   btnPrev.setAttribute('data-bs-target','#exampleModal')
-   btnPrev.innerText = 'Volver al sitio anterior'
+   // const rowBoth = document.createElement('div')
+   // rowBoth.classList.add('row','d-flex', 'justify-content-center')
 
-   btnPrev.addEventListener('click', function(){
-      history.back()
-   })
+   // const colBoth = document.createElement('div')
+   // colBoth.classList.add('col-4')
+   
 
-   var objArt = {}
-   var arrArti = []
+   // const btnPrev = document.createElement('a')
+   // btnPrev.classList.add('btn','btn-primary' , 'm-3')
+   // btnPrev.setAttribute('type','button')
+   // btnPrev.innerText = 'Volver al sitio anterior'
+
+   // btnPrev.addEventListener('click', function(){
+   //    history.back()
+   // })
+
+   // var objArt = {}
+   // var arrArti = []
 
    //BOTON PARA GUARDAR LA COMPRA
-   const btnComp = document.createElement('a')
-   btnComp.classList.add('btn', 'btn-success','ms-1')
-   btnComp.setAttribute('type','button')
-   btnComp.innerText = 'Añadir al carrito'
-   btnComp.addEventListener('click', function(){
-      
-      if(localStorage.getItem('idComp')){
-         arrArti = JSON.parse(localStorage.getItem('idComp'))
-         objArt['idComp'] = localStorage.getItem('id')
-         arrArti.push(objArt) 
-         localStorage.setItem('idComp', JSON.stringify(arrArti))
-      }else{
-         objArt['idComp'] = localStorage.getItem('id')
-         arrArti.push(objArt)
-         localStorage.setItem('idComp', JSON.stringify(arrArti))
-      }
-      alert("Articulo agregado al carrito.")
-   })
-   divButt.appendChild(btnComp)
-   divButt.appendChild(btnPrev)
-   articuloDet.appendChild(divButt)
-   row.appendChild(articuloDet)
+   // const btnComp = document.createElement('a')
+   // btnComp.classList.add('btn', 'btn-success', 'm-3')
+   // btnComp.setAttribute('type','button')
+
+   // btnComp.innerText = 'Añadir al carrito'
+   // btnComp.setAttribute('data-bs-toggle','modal')
+   // btnComp.setAttribute('data-bs-target','#exampleModal')
+
+   // btnComp.addEventListener('click', function(){
+   //    if(localStorage.getItem('idComp')){
+   //       arrArti = JSON.parse(localStorage.getItem('idComp'))
+   //       objArt['idComp'] = localStorage.getItem('id')
+   //       arrArti.push(objArt) 
+   //       localStorage.setItem('idComp', JSON.stringify(arrArti))
+   //    }else{
+   //       objArt['idComp'] = localStorage.getItem('id')
+   //       arrArti.push(objArt)
+   //       localStorage.setItem('idComp', JSON.stringify(arrArti))
+   //    }
+   // }) 
+   
+   // rowBoth.appendChild(btnComp)
+   // rowBoth.appendChild(btnPrev)
+   // articuloDetCol.appendChild(rowBoth)
+   // articuloDetRow.appendChild(articuloDetCol)
+   // row.appendChild(articuloDetRow)
 }
 
 //EL BOTON DEL CARRITO QUE SE ACTUALICE A LO ÚLTIMO
