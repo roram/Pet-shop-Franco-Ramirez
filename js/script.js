@@ -61,54 +61,27 @@ function funcionPrincipal(dataRaw){
       arrArtCarrito = JSON.parse(localStorage.getItem('idComp'))
 
       if(arrArtCarrito){
-         var arrCarrito = dataRaw.filter((art) =>{
-            for(var i = 0; i < arrArtCarrito.length; i++){
-               if(art._id == arrArtCarrito[i].idComp){
-                  return art
-               }
-            }
-         })
+
          //CREA LOS ELEMENTOS DEL CARRITO
-         arrCarrito.map((art) => {
+         arrArtCarrito.map((art) => {
    
             var row = document.createElement('tr')
             row.classList.add('align-center')
             row.innerHTML = `
-            <td class="text-center align-middle"><img class="img-fluid img-thumbnail" src="${art.imagen}" alt="Imagen de articulo"></td>
-            <td class="text-center align-middle">${art.nombre}</td>
-            <td class="text-center align-middle fw-bold">$ ${art.precio}</td>
+            <td class="text-center align-middle"><img class="img-fluid img-thumbnail espacio" src="${art.imgArt}" alt="Imagen de articulo"></td>
+            <td class="text-center align-middle">${art.nombArt}</td>
+            <td class="text-center align-middle">$ ${art.precArt}</td>
+            <td class="text-center align-middle">${art.cantComp} U.</td>
+            <td class="text-center align-middle">$ ${art.cantComp * art.precArt}</td>
+            <td class="text-center align-middle" id="borrar"><button class="btn btn-danger">X</button></td>
             `
-            var tdEli = document.createElement('td')
-            tdEli.classList.add('text-center', 'align-middle', 'col-1')
-   
-            var btnEli = document.createElement('button')
-            btnEli.classList.add('btn', 'btn-danger')
-            btnEli.innerText = 'X'
-            btnEli.addEventListener('click', function(){
-               btnEli.parentElement.parentElement.remove()
-            })
-   
-            tdEli.appendChild(btnEli)
-            row.appendChild(tdEli)
             document.getElementById('carrito').appendChild(row)
-         })
-   
-         var btnCompra = document.getElementById('compra')
-         var btnCancCompra = document.getElementById('cancCompra')
-   
-         btnCompra.addEventListener('click', function(){
-            localStorage.clear();
-         })
-   
-         btnCancCompra.addEventListener('click', function(){
-            localStorage.clear();
-         })
-   
-         var cantidadProducCarrito = document.getElementById('cantProd')
-         cantidadProducCarrito.innerHTML = `<i class="fas fa-shopping-cart"></i> ${arrArtCarrito.length}`
 
+            document.getElementById('borrar').addEventListener('click', (e)=>{
+               e.target.parentElement.parentElement.remove()
+            })          
+         })
       }
-   
    }
 }
 //FUNCION QUE CARGA PRODUCTOS EN CADA PÁGINA
@@ -162,112 +135,92 @@ function crarArticulo(dataRaw, rowFather){
 }
 //FUNCION PARA MOSTRAR LOS DATOS EN PAGINA ARTICULO
 function impArti(dataRaw, row){
+
+   var imgArt = document.getElementById('imgArt')
+   imgArt.innerHTML = `<img class="img-fluid img-thumbnail" src="${dataRaw.imagen}" alt="Imagen de artículo">
+                        <div class="mt-5">
+                           <button id="compra">Agregar al carrito</button>
+                           <button id="volver">Volver a la página anterior</button>
+                        </div>
+   `
+   //CREAR BOTONES DE COMPRA DE LOS ARTÍCULOS
+
+   const btnPrev = document.getElementById('volver')
+   btnPrev.classList.add('btn','btn-primary')
+   btnPrev.addEventListener('click', function(){
+      history.back()
+   })
+
+   // BOTON PARA GUARDAR LA COMPRA EN CARRITO
+
+   var objArt = {}
+   var arrArti = []
+
+   const btnComp = document.getElementById('compra')
+   btnComp.classList.add('btn', 'btn-success')
+
+   btnComp.innerText = 'Añadir al carrito'
+   btnComp.setAttribute('data-bs-toggle','modal')
+   btnComp.setAttribute('data-bs-target','#exampleModal')
+
+   btnComp.addEventListener('click', function(){
+      if(localStorage.getItem('idComp')){
+         arrArti = JSON.parse(localStorage.getItem('idComp'))
+         objArt['idComp'] = localStorage.getItem('id')
+         objArt['cantComp'] = localStorage.getItem('cant')
+         objArt['nombArt'] = dataRaw.nombre
+         objArt['precArt'] = dataRaw.precio
+         objArt['imgArt'] = dataRaw.imagen
+         arrArti.push(objArt) 
+         localStorage.setItem('idComp', JSON.stringify(arrArti))
+      }else{
+         objArt['idComp'] = localStorage.getItem('id')
+         objArt['cantComp'] = localStorage.getItem('cant')
+         objArt['nombArt'] = dataRaw.nombre
+         objArt['precArt'] = dataRaw.precio
+         objArt['imgArt'] = dataRaw.imagen
+         arrArti.push(objArt)
+         localStorage.setItem('idComp', JSON.stringify(arrArti))
+      }
+   })
+
+   //DESCRIPCION DE LOS ARTÍCULOS
+   var caracArt = document.getElementById('caracArt')
+   caracArt.innerHTML =`
+      <h1>${dataRaw.nombre}</h1>
+      <h2>${dataRaw.tipo}</h2>
+      <h2>$ ${dataRaw.precio}</h2>
+      <div id="selecArt"></div>
+      <p>${dataRaw.descripcion}</p>
+   `
    
+   var colSelec = document.getElementById('selecArt')
 
+   var selectCont = document.createElement('select')
+   selectCont.classList.add('form-select')
+   selectCont.setAttribute('aria-label', 'Default', 'select', 'example')
 
-   // const articuloDetRow = document.createElement('div')
-   // articuloDetRow.classList.add('row', 'mt-5')
+   selectCont.addEventListener('change',() =>{
+      localStorage.setItem('cant', selectCont.value) 
+   })
 
-   // const articuloDetCol = document.createElement('div')
-   // articuloDetCol.classList.add('col-12')
+   var defOpt = document.createElement('option')
+   defOpt.setAttribute('selected','true')
+   defOpt.innerText = "Cantidad de unidades"
 
+   selectCont.appendChild(defOpt)
+   var selectOpt
 
-   //CREO ELEMENTO PARA ELEGIR LA CANTIDAD DE PRODUCTOS DEPENDIENDO DEL STOCK
-   
+   for(var i = 0; i<5; i++){
+      selectOpt = document.createElement('option')
+      selectOpt.setAttribute('value', `${i+1}`)
+      selectOpt.innerText = `${i+1} unidad`
+      selectCont.appendChild(selectOpt)
+   }
 
-   // articuloDetCol.innerHTML =
-   //    <div class="col-12 d-flex justify-content-center align-items-center">
-   //       <div class="col-5">
-   //          <img class="img-fluid img-thumbnail" src="${dataRaw.imagen}" alt="Imagen de artículo">
-   //       </div>
-   //       <div class="col-4">
-   //          <h1>${dataRaw.nombre}</h1>
-   //          <h2>${dataRaw.tipo}</h2>
-   //          <h2>$ ${dataRaw.precio}</h2>
-   //          <h2>
-   //             <div class="dropdown">
-   //                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-   //                Cantidad de articulos
-   //                </button>
-   //                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-   //                <li><a class="dropdown-item" href="#">1</a></li>
-   //                <li><a class="dropdown-item" href="#">2</a></li>
-   //                <li><a class="dropdown-item" href="#">3</a></li>
-   //                </ul>
-   //             </div>
-   //          </h2>
-   //          <p>${dataRaw.descripcion}</p>
-   //       </div>
-   //    </div>
-   
-// LO QUE TENGO QUE RECREAR
-//    <div class="col-4">
-//          <h1>${dataRaw.nombre}</h1>
-//          <h2>${dataRaw.tipo}</h2>
-//          <h2>$ ${dataRaw.precio}</h2>
-//          <h2>
-//             <div class="dropdown">
-//                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-//                Cantidad de articulos
-//                </button>
-//                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-//                <li><a class="dropdown-item" href="#">1</a></li>
-//                <li><a class="dropdown-item" href="#">2</a></li>
-//                <li><a class="dropdown-item" href="#">3</a></li>
-//                </ul>
-//             </div>
-//          </h2>
-//          <p>${dataRaw.descripcion}</p>
-//       </div>
-
-   //BOTON PARA VOLVER ATRAS
-
-   // const rowBoth = document.createElement('div')
-   // rowBoth.classList.add('row','d-flex', 'justify-content-center')
-
-   // const colBoth = document.createElement('div')
-   // colBoth.classList.add('col-4')
-   
-
-   // const btnPrev = document.createElement('a')
-   // btnPrev.classList.add('btn','btn-primary' , 'm-3')
-   // btnPrev.setAttribute('type','button')
-   // btnPrev.innerText = 'Volver al sitio anterior'
-
-   // btnPrev.addEventListener('click', function(){
-   //    history.back()
-   // })
-
-   // var objArt = {}
-   // var arrArti = []
-
-   //BOTON PARA GUARDAR LA COMPRA
-   // const btnComp = document.createElement('a')
-   // btnComp.classList.add('btn', 'btn-success', 'm-3')
-   // btnComp.setAttribute('type','button')
-
-   // btnComp.innerText = 'Añadir al carrito'
-   // btnComp.setAttribute('data-bs-toggle','modal')
-   // btnComp.setAttribute('data-bs-target','#exampleModal')
-
-   // btnComp.addEventListener('click', function(){
-   //    if(localStorage.getItem('idComp')){
-   //       arrArti = JSON.parse(localStorage.getItem('idComp'))
-   //       objArt['idComp'] = localStorage.getItem('id')
-   //       arrArti.push(objArt) 
-   //       localStorage.setItem('idComp', JSON.stringify(arrArti))
-   //    }else{
-   //       objArt['idComp'] = localStorage.getItem('id')
-   //       arrArti.push(objArt)
-   //       localStorage.setItem('idComp', JSON.stringify(arrArti))
-   //    }
-   // }) 
-   
-   // rowBoth.appendChild(btnComp)
-   // rowBoth.appendChild(btnPrev)
-   // articuloDetCol.appendChild(rowBoth)
-   // articuloDetRow.appendChild(articuloDetCol)
-   // row.appendChild(articuloDetRow)
+   colSelec.appendChild(selectCont)
+   row.appendChild(imgArt)
+   row.appendChild(caracArt)
 }
 
 //EL BOTON DEL CARRITO QUE SE ACTUALICE A LO ÚLTIMO
