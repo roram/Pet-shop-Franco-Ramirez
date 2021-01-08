@@ -260,6 +260,7 @@ $theme-colors: map-merge(
 //Footer va a quedar siempre abajo de todo no importa el contenido
 body
 {
+  font-family: 'Montserrat', sans-serif;
   height:100vh;
   display:flex; 
   flex-direction:column;

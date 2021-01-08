@@ -26,7 +26,7 @@ var toastList = toastElList.map(function (toastEl) {
 //LO QUE YO PROGRAME
 //FUNCION PARA OBTENER DATOS
 function fetchData(){
-   fetch('../js/data.json') //https://apipetshop.herokuapp.com/api/articulos
+   fetch('https://apipetshop.herokuapp.com/api/articulos')
    .then(response => response.json())
    .then(data => funcionPrincipal(data.response) )
 }
@@ -63,7 +63,7 @@ function funcionPrincipal(dataRaw){
       if(arrArtCarrito){
 
          //CREA LOS ELEMENTOS DEL CARRITO
-         arrArtCarrito.map((art) => {
+         arrArtCarrito.map((art,index) => {
    
             var row = document.createElement('tr')
             row.classList.add('align-center')
@@ -73,13 +73,15 @@ function funcionPrincipal(dataRaw){
             <td class="text-center align-middle">$ ${art.precArt}</td>
             <td class="text-center align-middle">${art.cantComp} U.</td>
             <td class="text-center align-middle">$ ${art.cantComp * art.precArt}</td>
-            <td class="text-center align-middle" id="borrar"><button class="btn btn-danger">X</button></td>
+            <td class="text-center align-middle borrar" id=""><button class="btn btn-danger">X</button></td>
             `
             document.getElementById('carrito').appendChild(row)
-
-            document.getElementById('borrar').addEventListener('click', (e)=>{
-               e.target.parentElement.parentElement.remove()
-            })          
+            document.getElementsByClassName('borrar')[index].addEventListener('click', (e)=>{
+               arrArtCarrito = arrArtCarrito.filter((artObj) => artObj.idComp != art.idComp)
+               localStorage.setItem('idComp', JSON.stringify(arrArtCarrito))
+               e.target.parentElement.parentElement.remove(this)
+               contarProd.innerHTML = `<i class="fas fa-shopping-cart"></i> ${arrArtCarrito.length}`
+            })
          })
       }
    }
@@ -182,6 +184,7 @@ function impArti(dataRaw, row){
          arrArti.push(objArt)
          localStorage.setItem('idComp', JSON.stringify(arrArti))
       }
+      contarProd.innerHTML = `<i class="fas fa-shopping-cart"></i> ${cantProd.length + 1}`
    })
 
    //DESCRIPCION DE LOS ARTÍCULOS
@@ -211,7 +214,7 @@ function impArti(dataRaw, row){
    selectCont.appendChild(defOpt)
    var selectOpt
 
-   for(var i = 0; i<5; i++){
+   for(var i = 0; i< dataRaw.stock; i++){
       selectOpt = document.createElement('option')
       selectOpt.setAttribute('value', `${i+1}`)
       selectOpt.innerText = `${i+1} unidad`
