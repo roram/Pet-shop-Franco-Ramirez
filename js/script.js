@@ -1,4 +1,4 @@
-//FUNCIONES QUE NECESITA BOOTSTRAP PARA FORMULARIOS, LO COPIE Y PEGUE
+//FUNCIONES QUE NECESITA BOOTSTRAP PARA FORMULARIOS
 //VALIDA FORMULARIOS
 (function () {
    'use strict'
@@ -17,16 +17,9 @@
        }, false)
      })
  })()
-//MUESTRA TOASTS
-var toastElList = [].slice.call(document.querySelectorAll('.toast'))
-var toastList = toastElList.map(function (toastEl) {
-  return new bootstrap.Toast(toastEl, option)
-})
-
-//LO QUE YO PROGRAME
 //FUNCION PARA OBTENER DATOS
 function fetchData(){
-   fetch('https://apipetshop.herokuapp.com/api/articulos')
+   fetch('https://apipetshop.herokuapp.com/api/articulos') //
    .then(response => response.json())
    .then(data => funcionPrincipal(data.response) )
 }
@@ -36,12 +29,13 @@ if(document.getElementById('inicio') || document.getElementById('registro')){
    fetchData()
 }
 
-//COMPRUEBO EN QUE PÁGINA ESTOY
+
 
 //FUNCION GENERAL PARA UTILIZAR LOS DATOS
 
 function funcionPrincipal(dataRaw){
 
+   //COMPRUEBO EN QUE PÁGINA ESTOY
    if(document.getElementById('farmacia')){
 
       cargaProductos(dataRaw, document.getElementById('farmacia'), 'Medicamento')
@@ -64,7 +58,6 @@ function funcionPrincipal(dataRaw){
 
          //CREA LOS ELEMENTOS DEL CARRITO
          arrArtCarrito.map((art,index) => {
-   
             var row = document.createElement('tr')
             row.classList.add('align-center')
             row.innerHTML = `
@@ -84,6 +77,13 @@ function funcionPrincipal(dataRaw){
             })
          })
       }
+
+      document.getElementById('compra').addEventListener('click',()=>{
+         localStorage.clear();
+      })
+      document.getElementById('cancCompra').addEventListener('click',()=>{
+         localStorage.clear();
+      })
    }
 }
 //FUNCION QUE CARGA PRODUCTOS EN CADA PÁGINA
@@ -184,7 +184,11 @@ function impArti(dataRaw, row){
          arrArti.push(objArt)
          localStorage.setItem('idComp', JSON.stringify(arrArti))
       }
-      contarProd.innerHTML = `<i class="fas fa-shopping-cart"></i> ${cantProd.length + 1}`
+      if(cantProd){
+         contarProd.innerHTML = `<i class="fas fa-shopping-cart"></i> ${cantProd.length + 1}`
+      }else{
+         contarProd.innerHTML = `<i class="fas fa-shopping-cart"></i> ${1}`
+      }
    })
 
    //DESCRIPCION DE LOS ARTÍCULOS
