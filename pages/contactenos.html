@@ -166,23 +166,21 @@
                                  </div>
                               </div>
                               <div class="form-row">
-                                 <div class="form-group col-6">
-                                    <label for="inputEspe">Especie (En caso de seleccionar otro, especifíque)</label>
-                                    <select class="form-control" name="especie" id="inputEspe">
-                                       <option selected>Seleccione uno...</option>
+                                 <div class="form-group col-6">                                                                        
+                                    <label for="especMasc" class="form-label">Especie (En caso de seleccionar otro, especifíque)</label>
+                                    <select class="form-control form-select" id="especMasc" required>
+                                       <option selected disabled value="">Seleccione uno...</option>
                                        <option>Perro</option>
                                        <option>Gato</option>
                                        <option>Otro</option>
                                     </select>
-                                    
+                                    <div class="invalid-feedback">
+                                       Seleccione al menos una opción
+                                    </div>                                    
                                  </div>
                                  <div class="form-group col-6">
                                     <label for="inputEspeOtro">Otro</label>
-                                    <input type="text" class="form-control" id="inputEspeOtro" required>
-                                    <div class="invalid-feedback">
-                                       Ingrese un nombre válido.
-                                    </div>
-                                    <div class="valid-feedback"></div>
+                                    <input type="text" class="form-control" id="inputEspeOtro">                                                                     
                                  </div>
                               </div>
                               <div class="form-group">
